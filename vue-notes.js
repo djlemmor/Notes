@@ -62,6 +62,8 @@ typing vue and pressing tab creates a boiler plate because of vetur extension
 
 npm install # terminal command to install the project dependencies
 
+test
+
 
 
 
