@@ -62,7 +62,75 @@ typing vue and pressing tab creates a boiler plate because of vetur extension
 
 npm install # terminal command to install the project dependencies
 
-test
+# to push or update the github repo from local
+git add . # add the files to be push
+git commit -m "message" # -m means message, message or description of the update to be commited
+git push origin main # origin is the url or the repo to be push and main is where is the file coming from to be push or updated
+
+#START OF REFS
+ref is equevalent of getting the id or class in javascript like using queryselector
+const ref = document.querySelector("#ref"); 
+<input type="text" ref="name" > # input field on template
+this.$refs.name # to get the reference from script tag
+#END OF REFS
+
+#COMPONENT TREE
+App.vue is the root component or the parent component
+header.vue # child component of App.vue
+main.vue # child component of App.vue
+footer.vue # child component of App.vue
+<header> # parent component of nav
+<nav></nav> # child component of header
+<header>
+#END OF COMPONENT TREE
+
+v-on:click ="";
+@click ="";
+
+<template>
+  <div class="modal" v-show="toggle">
+      <h1>content</h1>
+  </div>
+  <button @click="toggle = !toggle">Click Me</button> # toggle = !toggle to toggle something with its not equal value
+  <button @click="toggleModal>Click Me</button> # click calls the function toggleModal
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            toggle: false
+        }
+    },
+    methods: { # this is where we define or create our functions or methods 
+        toggleModal() {
+            this.toggle = true
+        }
+    },
+}
+</script>
+
+# how to import components to other components
+import Modal from './components/Modal.vue'; # example the Modal component
+components: { # inside export default object
+    Modal, #register the component to the component where we want the component to be used
+ },
+ <Modal /> # anywhere inside template. to where we are gonna output our component
+
+#apply global css
+create a global.css or stylesheet in the assets folder then in the main.js file import the css
+import './assets/global.css'
+
+
+
+
+
+
+
+
+
+
+
 
 
 
