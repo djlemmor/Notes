@@ -121,6 +121,57 @@ components: { # inside export default object
 create a global.css or stylesheet in the assets folder then in the main.js file import the css
 import './assets/global.css'
 
+#PROPS - passing data from parent component to child component
+<template>
+    <h1> {{ title }} </h1>
+    <Modal 
+        content="Im a prop" #passing a props called content on parent component
+        :secondcontent="secondcontent" #binding the props value to a data so it can be dynamic
+                                       # :colon then the name of attribute is how we bind data to it                     
+    /> 
+</template>
+
+#PARENT COMPONENT
+<script>
+import Modal from './components/Modal.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+      title: "Hi Vue",
+      secondcontent: "Im the second prop awesome",
+    }
+  },
+}
+</script>
+
+#CHILD COMPONENT
+<script>
+export default {
+    data() {
+        return {
+            toggle: true
+        }
+    },
+    # accepts the props in the child component name content, props is always an array
+    props: ['content', 'secondcontent'], 
+    methods: {
+        toggleModal() {
+            this.toggle = true
+        }
+    },
+}
+</script>
+
+<h1>{{ content }}</h1> # outputting or echoing the props in the child component 
+<h2>{{ secondcontent }}</h2> # outputting or echoing the props in the child component 
+         
+div :class="{ sale: isSale == true}" > #binding a dynamic class using conditional statement
+isSale: false #declaring the data isSale on data(){} method
 
 
 
