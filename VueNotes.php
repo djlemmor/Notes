@@ -181,14 +181,19 @@ isSale: false #declaring the data isSale on data(){} method
 methods: {
     clickSomething() {
         this.$emit('close') # any event that we want to emit
+        this.$emit('end', this.reactionTime); # can also pass a data when emitting an event
     }
 }
 # parent component
 <Modal @close="closeModal" /> # name of the child component
+<Block @end="endGame" /> # name of the child component
 methods: {
     closeModal() {
         this.modalClose = !this.modalClose
-    }
+    },
+    endGame(reactionTime){ # the data we pass on with the event becomes the arguments
+      this.score = reactionTime
+    },
 }
 # end of emit
 
@@ -198,6 +203,152 @@ methods: {
 # click event modifiers
 <button @click.shift="">Click Me</button> # only click when pressing shift key
 <button @click.self="">Click Me</button> # only affect the target element when click, does not affect child or parent component
+
+# how to pass templates from parent to child component? By using Slots
+# parent component
+<Modal>
+    <h1>Content 1</h1> # the component slot area
+    <h2>Content 2</h2> 
+    <template v-slot:link> # link is the name of the slot
+        <a href="">Im a name slot</a>
+    </template>
+</Modal>
+# child component
+<div>
+    <slot></slot> # where the slot is gonna be rendered
+    <slot>Default Content</slot> # slot can also have a default content, only if it doesnt have a data 
+</div>
+<slot name='link'></slot> # name slot rendered here
+# end of slot
+
+#How to use the teleport directive?
+<teleport to=".modals"></teleport> # from <div></div> to <teleport to=".modals"></teleport> just replace tag
+<div class="modals"></div> # to where the tag will be teleported
+
+#How to use mounted hook?
+mounted() {
+        console.log("mounted");
+},
+
+#How to use javascript built-in functions
+mounted() {
+    console.log("mounted");
+    setTimeout(() => { # setTimeout function
+        this.showBlock = true
+    },this.delay);
+},
+
+# Two way data binding
+#How to use v-model? 
+<template>
+  <form>
+      <label>Email:</label>
+      <input v-model="email" type="email" required> # bind the email data to the input field
+  </form>
+  <p> {{ email }} </p> # output the data email
+</template>
+
+<script>
+export default {
+    data() {
+        return{
+            email: '' # declare the email on data function
+        }
+    }
+}
+</script>
+
+# How to use Multiple Checkboxes in a form
+<div>
+    <input v-model="names" type="checkbox" value="shaun">
+    <label>Shaun</label>
+</div>
+<div>
+    <input v-model="names" type="checkbox" value="yoshi">
+    <label>Yoshi</label>
+</div>
+<div>
+    <input v-model="names" type="checkbox" value="mario">
+    <label>Mario</label>
+</div>
+
+names: [] # to store the names on an array 
+
+# How to use vue router
+when creating a project using vue cli manually select Router and select yes if prompt use web history
+
+<template>
+  <div id="nav">
+    <router-link to="/">Home</router-link> | # router link browser
+    <router-link to="/about">About</router-link> # router link, rendered as an a tag in browser
+    <router-link :to="{ name: 'About' }">About</router-link> # data bind the route with it's name 
+  </div> 
+  <router-view/> # where the route is going to get display
+</template>
+
+# Dynamic Routes
+{
+    path: '/jobs/:id',
+    name: 'JobDetails',
+    component: JobDetails
+}
+
+# How to get the route parameters and assign in to a data
+data() {
+    return {
+        id: this.$route.params.id  # depends on the route parameter 
+        name: this.$route.params.name # depends on the route parameter
+    }
+}
+
+# How to get the parameters data and go to that route
+<router-link :to="{ name: 'JobDetails', params: { id: job.id }}">
+
+
+# How to accept props using routes
+
+{
+    path: '/jobs/:id',
+    name: 'JobDetails',
+    component: JobDetails,
+    props: true
+}
+
+props: ['id'],
+
+# How to redirect a route or link
+
+{
+    path: '/all-jobs',
+    redirect: '/jobs'
+}
+
+# How to redirect all non existing routes and redirect it to a page or component
+{
+    path: '/:catchAll(.*)',
+    name: 'Not Found',
+    component: NotFound
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
