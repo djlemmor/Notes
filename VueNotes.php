@@ -306,7 +306,6 @@ data() {
 
 
 # How to accept props using routes
-
 {
     path: '/jobs/:id',
     name: 'JobDetails',
@@ -317,7 +316,6 @@ data() {
 props: ['id'],
 
 # How to redirect a route or link
-
 {
     path: '/all-jobs',
     redirect: '/jobs'
@@ -330,6 +328,21 @@ props: ['id'],
     component: NotFound
 }
 
+# How to fetch data using fetch api / built-in javascript method
+mounted() {
+    fetch('http://localhost:3000/jobs')
+      .then(res => res.json())
+      .then(data => this.jobs = data)
+      .catch(err => console.log(err.message))
+}
+
+# How to use json server 
+
+first create a folder name db
+inside db create a file db.json
+
+npm install json-server
+npx json-server --watch data/db.json # file path 
 
 
 
