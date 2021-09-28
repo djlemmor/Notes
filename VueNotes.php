@@ -344,16 +344,73 @@ inside db create a file db.json
 npm install json-server
 npx json-server --watch data/db.json # file path 
 
+# How to delete data using fetch api 
+data() {
+    return{
+            showDetails: false,
+            uri: 'http://localhost:3000/projects/'+this.project.id # storing the api url
+        }
+    },
+methods: {
+    deleteProject(){ # function name, fires when click
+      fetch(this.uri, { method: 'DELETE' }) # pass a DELETE on the second argument
+        .then(() => this.$emit('delete', this.project.id)) # emitting a custome delete event to update the local data 
+        .catch(err => console.log(err.message)) # check if there is an error
+    },
+},
+
+# How to update data using fetch api
+toggleComplete(){
+    this.project.complete = true # what you want to update
+    fetch(this.uri,
+        { method: 'PUT', # use put method
+          headers: {'Content-Type': 'application/json'}, # headers of json
+          body: JSON.stringify(this.project), }) # convert the data of project to json string
+        .then(res => res.json()) # get the response
+        .then(data => this.$emit('complete', data)) # get the data of response
+        .catch(err => console.log(err.message))
+} # the question is how do we know what data to be updated? the answer is in the uri, in the uri we pass the project.id
 
 
+# How to patch request using fetch api / patch request is when you just have to update 1 data 
+toggleComplete(){
+    fetch(this.uri, 
+        { method: 'PATCH', 
+          headers: {'Content-Type': 'application/json'}, 
+          body: JSON.stringify({ complete: !this.project.complete })
+    }).then(() => {
+          this.$emit('complete', this.project.id)}
+    ).catch(err => console.log(err))
+}
 
 
+# How to bind class
+<div class="project" :class="{ complete: project.complete }"> # takes object the first is the classname and 2nd is the condition
 
+# How to add css on the active route
+a.router-link-active {
+  border-bottom: 2px solid #00ce89;
+  padding-bottom: 4px;
+}
 
+# Access the data from custom event on the component
+updateFilter(by){
+      this.$emit('fiterChange', by) # Child Component
+},
+<FilterNav @fiterChange="current = $event" /> # $event is the data that has been pass # Parent Component
 
-
-
-
+# Computed Example
+computed: {
+    filteredProjects() {
+        if(this.current === 'completed' ){
+            return this.projects.filter( project => project.complete)
+        }
+        if(this.current === 'ongoing' ){
+            return this.projects.filter( project => !project.complete)
+        }
+      return this.projects
+    }
+}
 
 
 
