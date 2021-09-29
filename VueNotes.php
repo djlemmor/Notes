@@ -506,6 +506,82 @@ setup() {
     return {}
 }
 
+# How to use async and await 
+<div v-if="error">{{ error }}</div> # show error if true or has value
+<div v-if="posts.length"> # show the postlist component if posts has length
+<PostList :posts="posts" />
+</div>
+<div v-else>Loading...</div> # show loading if posts has no length or empty
+
+const posts = ref([]) # posts array
+const error = ref(null) # error null
+
+const load = async () => { # to make the function asyncronous
+      try {
+        let data = await fetch('http://localhost:3000/posts') # here we wait for the fetch api to get the data 
+          if(!data.ok) { # here if data.ok is true then make it false
+            throw Error('no data available') # assign a custom error message
+          }
+          posts.value = await data.json() # await the data to be parse in json format
+      }
+      catch (err) { 
+        error.value = err.message # assign the error message on error
+        console.log(error.value)
+      }
+    }
+
+    load() # invoke the function to run 
+
+    return { posts, error }
+}
+
+
+# How to create reusable composition/component functions
+first create a folder in the src directory and you can give it any name eg. composables or helpers
+then create a javsacript file eg. getPosts.js
+
+/* getPosts.js */
+import { ref } from '@vue/reactivity' # importing ref from vue so we can use it 
+
+const getPosts = () => { # create a getPosts function same name with the file but we can name it whatever we want
+    const posts = ref([])
+    const error = ref(null)
+
+    const load = async() => {
+        try {
+            let data = await fetch('http://localhost:3000/posts')
+            if (!data.ok) {
+                throw Error('no data available')
+            }
+            posts.value = await data.json()
+        } catch (err) {
+            error.value = err.message
+            console.log(error.value)
+        }
+    }
+    return { posts, error, load } # this is important, we must return the data so we can use it when we import it
+}
+
+export default getPosts # this is important, we need to export the function that we make so we can access it 
+
+/* component */
+import getPosts from '@/composables/getPosts' # the file path and name
+  setup() {
+    const { posts, error, load } = getPosts() # deconstruct the data from getPosts
+    load() # invoke the load function
+    
+    return { posts, error } 
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
