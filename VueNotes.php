@@ -8,7 +8,7 @@ npm install -g @vue/cli //command to instal vue cli// npm is the nodejs we insta
 change folder or directory to where we gonna create our project using cd command in the command line //example cd .. or cd Documents
 vue create project-name // command to create the project // vue is the command from vue cli package we installed 
 
-#START OF VUE CREATE POTIONS
+#START OF VUE CREATE OPTIONS
 select manually select features choose Typescript, Router, Vuex 
 version 3
 use class-style component syntax? No
@@ -63,19 +63,19 @@ typing vue and pressing tab creates a boiler plate because of vetur extension
 
 npm install # terminal command to install the project dependencies
 
-# to push or update the github repo from local
+How to push or update the github repo from local
 git add . # add the files to be push
 git commit -m "message" # -m means message, message or description of the update to be commited
 git push origin main # origin is the url or the repo to be push and main is where is the file coming from to be push or updated
 
-#START OF REFS
+How to use ref in options API
 ref is equevalent of getting the id or class in javascript like using queryselector
 const ref = document.querySelector("#ref"); 
 <input type="text" ref="name" > # input field on template
 this.$refs.name # to get the reference from script tag
-#END OF REFS
 
-#COMPONENT TREE
+
+What is component tree
 App.vue is the root component or the parent component
 header.vue # child component of App.vue
 main.vue # child component of App.vue
@@ -83,7 +83,6 @@ footer.vue # child component of App.vue
 <header> # parent component of nav
 <nav></nav> # child component of header
 <header>
-#END OF COMPONENT TREE
 
 v-on:click ="";
 @click ="";
@@ -122,7 +121,7 @@ components: { # inside export default object
 create a global.css or stylesheet in the assets folder then in the main.js file import the css
 import './assets/global.css'
 
-#PROPS - passing data from parent component to child component
+# How to use props 
 <template>
     <h1> {{ title }} </h1>
     <Modal 
@@ -221,16 +220,16 @@ methods: {
 <slot name='link'></slot> # name slot rendered here
 # end of slot
 
-#How to use the teleport directive?
+# How to use the teleport directive?
 <teleport to=".modals"></teleport> # from <div></div> to <teleport to=".modals"></teleport> just replace tag
 <div class="modals"></div> # to where the tag will be teleported
 
-#How to use mounted hook?
+# How to use mounted hook?
 mounted() {
         console.log("mounted");
 },
 
-#How to use javascript built-in functions
+# How to use javascript built-in functions
 mounted() {
     console.log("mounted");
     setTimeout(() => { # setTimeout function
@@ -239,7 +238,7 @@ mounted() {
 },
 
 # Two way data binding
-#How to use v-model? 
+# How to use v-model? 
 <template>
   <form>
       <label>Email:</label>
@@ -411,6 +410,150 @@ computed: {
       return this.projects
     }
 }
+
+# How to use composition API
+setup() { # setup runs before any lifecycle hook 
+    let name = 'mario' # declaring variable in the composition API
+    let age = 26 # not reactive means if the value here change, the value in the template does not change
+
+    const handleClick = () => { # creating a function in the composition API
+      console.log('You click me');
+    }
+    return {
+      name, age, handleClick # we must return the data so we can use or output it in the template
+    }
+}
+
+# How to make data or variables in composition API reactive
+import { ref, reactive } from '@vue/reactivity' # we must import ref from vue to use it in the setup
+
+setup() {
+    const name = ref('mario') # by using ref we can make the data reactive
+    const ninjaOne = ref({ name: 'mario', age: 30}) # by using ref we can make the data reactive
+    const ninjaTwo = reactive({ name: 'luigi', age: 35 }) # by using reactive we can make the data reactive
+
+    const handleClick = () => {
+      name.value = 'luigi' # how to change the value of a ref data
+    }
+
+    const updateNinjaOne = () => {
+      ninjaOne.value.age = 40 # how to change the value of a reactive data
+    }
+
+    const updateNinjaTwo = () => {
+      ninjaTwo.age = 45; # how to change the value of a reactive data
+    }
+
+    return {
+      name, ninjaOne, ninjaTwo, handleClick, updateNinjaOne, updateNinjaTwo
+    }
+}
+
+# How to use computed in composition API
+<input type="text" v-model="search">
+<p> Search term: {{ search }}</p>
+<div v-for="name in matchingNames" :key="name">
+
+import { ref, computed } from '@vue/reactivity'
+setup() {
+    const search = ref('')
+    const names = ref(['mario', 'yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
+    
+    const matchingNames = computed(() => {
+      return names.value.filter((name) => name.includes(search.value))
+    })
+    
+return { names, search, matchingNames }
+
+# How to use watch and watchEffect in composition API
+setup() {
+    const search = ref('')
+    const names = ref(['mario', 'yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
+
+    const stopWatch = watch(search, () => { # the first argument is the data that we want to watch
+      console.log('watch function work') # store the watch hook to a variable to stop it from watching
+    }) 
+
+    const stopEffect = watchEffect(() => {  # no need to put arguments
+      console.log('watchEffect function work', search.value) # put the data that we want to watch inside 
+    })
+
+    const matchingNames = computed(() => {
+      return names.value.filter((name) => name.includes(search.value))
+    })
+
+    const handleClick = () => {
+      stopWatch() # invoke the function to stop the watch
+      stopEffect()  # invoke the function to stop the watchEffect
+    }
+
+return { names, search, matchingNames, handleClick }
+
+# How to use props in composition API
+props: ['post'],
+  setup(props){ # setup first argument is props
+    const snippet = computed(() => {
+      return props.post.body.substring(0,20) + '.....' # here we access the props post body and modifed it
+    })
+
+    return { snippet }
+
+# How to use lifecycle hook on compositonAPI
+setup() {
+    onMounted(() => console.log('component mounted'))
+    onUnmounted(() => console.log('component unmounted'))
+    onUpdated(() => console.log('component updated'))
+    return {}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* GLOSSARY */
+
+component = resuable vue instances / a template that we can use to segregate the function of a website
+props = data that we pass from parent component to child component
+emit = a custom event that occurs in the child component and pass data to the parent component
+slot = where we display the data from parent component to child component
+computed = to compute a value using other data value and return it 
+reactive = to track the change of a value/state of a variable/data in the compositonAPI/setup()
+
+
+
+
+
 
 
 
