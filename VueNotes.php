@@ -1,19 +1,23 @@
 <?php 
+
 // VUE 3 NOTES //
 
-# HOW TO START? 
+// HOW TO START? //
 first install nodejs so we can use node package manager or npm to install vue cli
 type node -v on cmd or any command line to check if we installed nodejs properly
-npm install -g @vue/cli //command to instal vue cli// npm is the nodejs we install // -g means install the package globally
-change folder or directory to where we gonna create our project using cd command in the command line //example cd .. or cd Documents
-vue create project-name // command to create the project // vue is the command from vue cli package we installed 
+//command to instal vue cli// npm is the nodejs we install // -g means install the package globally
+npm install -g @vue/cli
+//example cd .. or cd Documents
+change folder or directory to where we gonna create our project using cd command in the command line
+//command to create the project // vue is the command from vue cli package we installed 
+vue create project-name
 
 #START OF VUE CREATE OPTIONS
 select manually select features choose Typescript, Router, Vuex 
 version 3
 use class-style component syntax? No
-Use Babel alongside Typescript? Yes
-Use history mode for routers? Yes
+use Babel alongside Typescript? Yes
+use history mode for routers? Yes
 Eslint with error prevention only
 Lint on save
 In dedicated config files
@@ -28,8 +32,8 @@ node_modules # the folder for libraries and dependencies
 public # the public folder to be uploaded in the serve
 public > index.html # this is where we mount our app.vue #mount means attaching our displaying our application
 src # is the folder where we write our code
-src > assets folder # 
-src > components folder # 
+src > assets folder 
+src > components folder 
 src > App.vue file # the root component, #Vue files structure is <template></template> <script></script> <style></style>
 src > main.js file # inside is the code that starts our application, createapp and mount method, here we import the App.vue then mount it on the #app. id app is inside index.html from public folder 
 .gitignore # the files to ignore or not to push on github when we upload our application to github
@@ -574,6 +578,59 @@ import getPosts from '@/composables/getPosts' # the file path and name
 }
 
 
+# How to use POST in compositionAPI 
+# How to use router in compositionAPI
+
+<form @submit.prevent="handleSubmit">
+  <label>Title:</label>
+  <input v-model="title" type="text" required>
+  <label>Content:</label>
+  <textarea v-model="body" required></textarea>
+  <label>Tags (hit enter to add a tag)</label>
+  <input v-model="tag" @keydown.enter.prevent="handleKeyDown" type="text">
+  <div v-for="tag in tags" :key="tag" class="pill">
+    #{{ tag }}
+  </div>
+  <button>Add Post</button>
+</form>
+
+<script>
+import { ref } from '@vue/reactivity'
+import { useRouter } from 'vue-router'
+
+export default {
+  setup() {
+    const title = ref('')
+    const body = ref('')
+    const tag = ref('')
+    const tags = ref([])
+
+    const router = useRouter()
+
+    const handleKeyDown = () => {
+      if(!tags.value.includes(tag.value)) {
+        tag.value = tag.value.replace(/\s/, '') //removes all whitespace
+        tags.value.push(tag.value)
+      }
+      tag.value = ''
+    }
+
+    const handleSubmit = async () => {
+      const post = { 
+        title: title.value,
+        body: body.value,
+        tags: tags.value
+      }
+      await fetch('http://localhost:3000/posts', 
+        { method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(post)
+        })
+        .catch((err) => console.log(err.message))
+        router.push({ name: 'Home'})
+    }
+
+return { title, body, tag, tags, handleKeyDown, handleSubmit }
 
 
 
