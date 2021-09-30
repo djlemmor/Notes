@@ -22,7 +22,10 @@ Eslint with error prevention only
 Lint on save
 In dedicated config files
 
-#change directory to the project folder
+
+// HOW TO CHANGE DIRECTORY OR FOLDER //
+#to go back one folder 
+cd ..
 cd project-name 
 #open your favorite text editor
 code . 
@@ -93,68 +96,77 @@ const ref = document.querySelector("#ref");
 this.$refs.name 
 
 
-What is component tree
-App.vue is the root component or the parent component
-header.vue # child component of App.vue
-main.vue # child component of App.vue
-footer.vue # child component of App.vue
-<header> # parent component of nav
-<nav></nav> # child component of header
+// WHAT IS COMPONENT TREE //
+#the root component or the parent component
+App.vue 
+#child component of App.vue
+header.vue 
+#child component of App.vue
+main.vue 
+#child component of App.vue
+footer.vue 
+#parent component of nav
+<header> 
+#child component of header
+<nav></nav> 
 <header>
 
+// HOW TO USE EVENTS IN VUE //
+#click event
 v-on:click ="";
+#click event shorthand
 @click ="";
 
-<template>
   <div class="modal" v-show="toggle">
       <h1>content</h1>
   </div>
-  <button @click="toggle = !toggle">Click Me</button> # toggle = !toggle to toggle something with its not equal value
-  <button @click="toggleModal>Click Me</button> # click calls the function toggleModal
-</template>
+                  #toggle = !toggle to toggle something with its not equal value
+  <button @click="toggle = !toggle">Click Me</button> 
+  <button @click="toggleModal">Click Me</button> # click calls the function toggleModal
 
-<script>
 export default {
     data() {
         return {
             toggle: false
         }
     },
-    methods: { # this is where we define or create our functions or methods 
+    #this is where we define or create our functions or methods 
+    methods: { 
         toggleModal() {
             this.toggle = true
         }
     },
 }
-</script>
 
-# how to import components to other components
-import Modal from './components/Modal.vue'; # example the Modal component
-components: { # inside export default object
-    Modal, #register the component to the component where we want the component to be used
+// HOW TO IMPORT COMPONENTS TO OTHER COMPONENTS //
+#example the Modal component
+import Modal from './components/Modal.vue'; 
+
+#inside export default object
+components: { 
+    #register the component to the component where we want the component to be used
+    Modal, 
  },
- <Modal /> # anywhere inside template. to where we are gonna output our component
+ #anywhere inside template. to where we are gonna output our component
+ <Modal /> 
 
-#apply global css
-create a global.css or stylesheet in the assets folder then in the main.js file import the css
+// HOW TO APPLY GLOBAL CSS //
+#create a global.css or stylesheet in the assets folder then in the main.js file import the css
 import './assets/global.css'
 
-# How to use props 
-<template>
+// HOW TO USE PROPS //
     <h1> {{ title }} </h1>
     <Modal 
-        content="Im a prop" #passing a props called content on parent component
-        :secondcontent="secondcontent" #binding the props value to a data so it can be dynamic
-                                       # :colon then the name of attribute is how we bind data to it                     
+        #passing a props called content on parent component
+        content="Im a prop"
+        #binding the props value to a data so it can be dynamic 
+        #:colon then the name of attribute is how we bind data to it   
+        :secondcontent="secondcontent"                                               
     /> 
-</template>
 
-#PARENT COMPONENT
-<script>
+#parent component
 import Modal from './components/Modal.vue';
 
-export default {
-  name: 'App',
   components: {
     Modal,
   },
@@ -163,19 +175,16 @@ export default {
       title: "Hi Vue",
       secondcontent: "Im the second prop awesome",
     }
-  },
-}
-</script>
 
-#CHILD COMPONENT
-<script>
-export default {
+#child component
     data() {
         return {
             toggle: true
         }
     },
-    # accepts the props in the child component name content, props is always an array
+
+// HOW TO ACCEPTS PROPS //  
+    #accepts the props in the child component name content, props is always an array
     props: ['content', 'secondcontent'], 
     methods: {
         toggleModal() {
@@ -185,23 +194,36 @@ export default {
 }
 </script>
 
-<h1>{{ content }}</h1> # outputting or echoing the props in the child component 
-<h2>{{ secondcontent }}</h2> # outputting or echoing the props in the child component 
-         
-div :class="{ sale: isSale == true}" > #binding a dynamic class using conditional statement
-isSale: false #declaring the data isSale on data(){} method
+// HOW TO BIND DATA OR ATTRIBUTE //
+#:colon then the name of attribute is how we bind data to it   
+:secondcontent="secondcontent"
+
+// HOW TO OUPUT OR ECHO A DATA // 
+#outputting or echoing the props in the child component 
+<h1>{{ content }}</h1> 
+#outputting or echoing the props in the child component 
+<h2>{{ secondcontent }}</h2> 
+  
+// HOW TO BIND A DYNAMIC CLASS //        
+#binding a dynamic class using conditional statement
+div :class="{ sale: isSale == true}" > 
+#declaring the data isSale on data(){} method
+isSale: false 
 
 
-# how to emit an event from child to parent component, also called custom event
-# child component
+// HOW TO USE EMIT //
+#how to emit an event from child to parent component, also called custom event
+#child component
 <div @click="clickSomething">
 methods: {
     clickSomething() {
-        this.$emit('close') # any event that we want to emit
-        this.$emit('end', this.reactionTime); # can also pass a data when emitting an event
+        #any event that we want to emit
+        this.$emit('close') 
+        #can also pass a data when emitting an event
+        this.$emit('end', this.reactionTime); 
     }
 }
-# parent component
+#parent component
 <Modal @close="closeModal" /> # name of the child component
 <Block @end="endGame" /> # name of the child component
 methods: {
@@ -592,9 +614,8 @@ import getPosts from '@/composables/getPosts' # the file path and name
 }
 
 
-# How to use POST in compositionAPI 
-# How to use router in compositionAPI
-
+// HOW TO USE POST IN COMPOSITION API // 
+// HOW TO USE ROUTER IN COMPOSITION API //
 <form @submit.prevent="handleSubmit">
   <label>Title:</label>
   <input v-model="title" type="text" required>
@@ -603,7 +624,7 @@ import getPosts from '@/composables/getPosts' # the file path and name
   <label>Tags (hit enter to add a tag)</label>
   <input v-model="tag" @keydown.enter.prevent="handleKeyDown" type="text">
   <div v-for="tag in tags" :key="tag" class="pill">
-    #{{ tag }}
+    {{ tag }}
   </div>
   <button>Add Post</button>
 </form>
@@ -618,17 +639,15 @@ export default {
     const body = ref('')
     const tag = ref('')
     const tags = ref([])
-
     const router = useRouter()
-
     const handleKeyDown = () => {
       if(!tags.value.includes(tag.value)) {
-        tag.value = tag.value.replace(/\s/, '') //removes all whitespace
+        #.replace removes all whitespace
+        tag.value = tag.value.replace(/\s/, '') 
         tags.value.push(tag.value)
       }
       tag.value = ''
     }
-
     const handleSubmit = async () => {
       const post = { 
         title: title.value,
@@ -688,7 +707,12 @@ return { title, body, tag, tags, handleKeyDown, handleSubmit }
 
 
 
-/* GLOSSARY */
+
+
+
+
+
+// GLOSSARY //
 
 component = resuable vue instances / a template that we can use to segregate the function of a website
 props = data that we pass from parent component to child component
