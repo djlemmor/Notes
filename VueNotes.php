@@ -344,14 +344,14 @@ data() {
 <router-link :to="{ name: 'JobDetails', params: { id: job.id }}">
 
 
-# How to accept props using routes
-{
-    path: '/jobs/:id',
-    name: 'JobDetails',
-    component: JobDetails,
-    props: true
+// HOW TO ACCEPT PROPS USING ROUTES //
+// HOW TO USE PROPS IN ROUTERS //
+{ 
+path: '/jobs/:id',
+name: 'JobDetails',
+component: JobDetails,
+props: true 
 }
-
 props: ['id'],
 
 # How to redirect a route or link
@@ -489,7 +489,7 @@ setup() {
     }
 }
 
-# How to use computed in composition API
+// HOW TO USE COMPUTED IN COMPOSITION API //
 <input type="text" v-model="search">
 <p> Search term: {{ search }}</p>
 <div v-for="name in matchingNames" :key="name">
