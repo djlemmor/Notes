@@ -27,10 +27,11 @@ scroll down SDK setup and configuration and choose config and copy the configura
 go back to the vscode project and create a folder firebase in src
 then inside firebase folder create a config.js file
 paste the configuration that we copied
+
 the config.js should look like this 
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseInit = () => {
     const firebaseConfig = {
@@ -45,7 +46,7 @@ const firebaseInit = () => {
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    return { db, collection, getDocs }
+    return { db }
 }
 
 export default firebaseInit
@@ -55,21 +56,21 @@ click Start Collection add Collection ID .example posts
 we can create our own id but its much simplier to auto generate
 then enter values on field, type and value then save
 
-// HOW TO GET DATA FROM FIRESTORE //
+// HOW TO GET DATA FROM FIRESTORE // FROM DOJO BLOG TRAINING
 import { ref } from '@vue/reactivity'
 import firebaseInit from '../firebase/config'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore'
 
 const getPosts = () => {
-    const { db, collection, getDocs } = firebaseInit()
-
+    const { db } = firebaseInit()
     const posts = ref([])
     const error = ref(null)
 
     const load = async() => {
         try {
             const collections = collection(db, 'posts')
-            const documents = await getDocs(collections);
-
+            const queries = query(collections, orderBy('createdAt', 'desc'))
+            const documents = await getDocs(queries)
             posts.value = documents.docs.map(doc => {
                 return {...doc.data(), id: doc.id }
             })
