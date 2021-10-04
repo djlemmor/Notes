@@ -546,19 +546,25 @@ setup() {
     return {}
 }
 
-# How to use async and await 
-<div v-if="error">{{ error }}</div> # show error if true or has value
-<div v-if="posts.length"> # show the postlist component if posts has length
+// HOW TO USE ASYNC AND AWAIT // 
+#show error if true or has value
+<div v-if="error">{{ error }}</div> 
+#show the postlist component if posts has length
+<div v-if="posts.length"> 
 <PostList :posts="posts" />
 </div>
-<div v-else>Loading...</div> # show loading if posts has no length or empty
+# showloading if posts has no length or empty
+<div v-else>Loading...</div> 
 
-const posts = ref([]) # posts array
-const error = ref(null) # error null
-
-const load = async () => { # to make the function asyncronous
+#posts array
+const posts = ref([]) 
+#error null
+const error = ref(null) 
+# async to make the function asyncronous
+const load = async () => { 
       try {
-        let data = await fetch('http://localhost:3000/posts') # here we wait for the fetch api to get the data 
+        #here we wait for the fetch api to get the data 
+        let data = await fetch('http://localhost:3000/posts') 
           if(!data.ok) { # here if data.ok is true then make it false
             throw Error('no data available') # assign a custom error message
           }
@@ -575,15 +581,16 @@ const load = async () => { # to make the function asyncronous
     return { posts, error }
 }
 
-
-# How to create reusable composition/component functions
+// HOW TO CREATE REUSABLE COMPOSITION/COMPONENT FUNCTIONS // 
 first create a folder in the src directory and you can give it any name eg. composables or helpers
 then create a javsacript file eg. getPosts.js
 
-/* getPosts.js */
-import { ref } from '@vue/reactivity' # importing ref from vue so we can use it 
+//getPosts.js //
+//importing ref from vue so we can use it 
+import { ref } from '@vue/reactivity'
 
-const getPosts = () => { # create a getPosts function same name with the file but we can name it whatever we want
+// reate a getPosts function same name with the file but we can name it whatever we want
+const getPosts = () => { 
     const posts = ref([])
     const error = ref(null)
 
@@ -599,16 +606,20 @@ const getPosts = () => { # create a getPosts function same name with the file bu
             console.log(error.value)
         }
     }
-    return { posts, error, load } # this is important, we must return the data so we can use it when we import it
+    #this is important, we must return the data so we can use it when we import it
+    return { posts, error, load } 
 }
 
-export default getPosts # this is important, we need to export the function that we make so we can access it 
+#this is important, we need to export the function that we make so we can access it 
+export default getPosts 
 
 /* component */
 import getPosts from '@/composables/getPosts' # the file path and name
   setup() {
-    const { posts, error, load } = getPosts() # deconstruct the data from getPosts
-    load() # invoke the load function
+    #deconstruct the data from getPosts
+    const { posts, error, load } = getPosts() 
+    #invoke the load function from getPosts
+    load() 
     
     return { posts, error } 
 }
@@ -642,7 +653,7 @@ export default {
     const router = useRouter()
     const handleKeyDown = () => {
       if(!tags.value.includes(tag.value)) {
-        #.replace removes all whitespace
+        #replace removes all whitespace
         tag.value = tag.value.replace(/\s/, '') 
         tags.value.push(tag.value)
       }
@@ -666,11 +677,54 @@ export default {
 return { title, body, tag, tags, handleKeyDown, handleSubmit }
 
 
+// HOW TO EMIT CUSTOM EVENT IN COMPOSITION API //
+<script>
+import { ref } from '@vue/reactivity'
+import useLogin from '@/composables/useLogin'
+
+export default {
+  #here we must pass the context in the setup to use emit
+  setup(props, context) { 
+    const { error, login } = useLogin()
+    const email = ref('')
+    const password = ref('')
+
+    const handleSubmit = async () => {
+      await login(email.value, password.value)
+      if(!error.value) {
+        #context.emit to emit a custom event
+        context.emit('login')
+      }
+    }
+
+    return { email, password, error, handleSubmit }
+  }
+}
+</script>
 
 
+// HOW TO PASS DATA FROM COMPOSABLES OR HELPERS // 
+const login = async(email, password) => {
+    error.value = null
 
+    try {
+        const res = await signInWithEmailAndPassword(firebaseAuth, email, password)
+        error.value = null
+        console.log(res)
+        return res
+    } catch (err) {
+        console.log(err.value)
+        error.value = "Incorrect login credentials"
+    }
+}
+    
+const useLogin = () => {
+            #we can also return a function
+    return { error, login }
+}
 
-
+#here we export the useLogin function so we can pass both the error data and login function
+export default useLogin
 
 
 
