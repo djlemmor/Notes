@@ -56,35 +56,33 @@ click Start Collection add Collection ID .example posts
 we can create our own id but its much simplier to auto generate
 then enter values on field, type and value then save
 
-// HOW TO GET DATA FROM FIRESTORE // FROM DOJO BLOG TRAINING
-import { ref } from '@vue/reactivity'
-import firebaseInit from '../firebase/config'
-import { collection, getDocs, orderBy, query } from 'firebase/firestore'
+// HOW TO DEPLOY YOUR VUE WEBSITE TO FIREBASE //
+go to firebase and click hosting then click get started
+and copy npm install -g firebase-tools then run it in the terminal
+note in every computer you can just run it once because it is installed globally -g
+then next
+Sign in to Google
+firebase login // paste it on the terminal
+Initiate your project
+firebase init // paste it on the terminal
+then next
+select Hosting: Configure files for Firebase Hosting 
+Use an existing project and select the firebase app
+What do you want to use as your public directory? dist
+Configure as a single-page app (rewrite all urls to /index.html)? (y/N) y
+Set up automatic builds and deploys with GitHub? (y/N) n // no for github
+then next
+but before we deploy we need to build our vue app
+npm run build // on terminal
+after that 
+type firebase deploy on terminal
+Deploy complete!
+go to firebase hosting to see the website url
 
-const getPosts = () => {
-    const { db } = firebaseInit()
-    const posts = ref([])
-    const error = ref(null)
-
-    const load = async() => {
-        try {
-            const collections = collection(db, 'posts')
-            const queries = query(collections, orderBy('createdAt', 'desc'))
-            const documents = await getDocs(queries)
-            posts.value = documents.docs.map(doc => {
-                return {...doc.data(), id: doc.id }
-            })
-
-        } catch (err) {
-            error.value = err.message
-            console.log(error.value)
-        }
-    }
-    return { posts, error, load }
-}
-
-export default getPosts
-
+// HOW TO UPDATE THE DEPLOYED FIREBASE WEBSITE //
+npm run build //in the terminal
+firebase deploy //in the terminal
+Deploy complete!
 
 
 
