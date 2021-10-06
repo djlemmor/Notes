@@ -154,6 +154,14 @@ components: {
 #create a global.css or stylesheet in the assets folder then in the main.js file import the css
 import './assets/global.css'
 
+// CSS VARIABLE //
+:root {
+    --primary: #4f515a;
+    --secondary: #ebebeb;
+    --warning: #da0f41;
+}
+color: var(--primary);
+
 // HOW TO USE PROPS //
     <h1> {{ title }} </h1>
     <Modal 
@@ -774,6 +782,54 @@ const router = createRouter({
 })
 
 export default router
+
+
+// HOW TO CATCH ERROR IN FIREBASE //
+// HOW TO CUSTOMIZE ERROR IN FIREBASE //
+import { ref } from '@vue/reactivity'
+import { firebaseAuth } from '../firebase/config'
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
+const error = ref(null)
+const isPending = ref(false)
+
+const signup = async(email, password, displayName) => {
+    error.value = null
+    isPending.value = true
+
+    try {
+        const res = await createUserWithEmailAndPassword(firebaseAuth, email, password)
+        if (!res) {
+            throw new Error('Could not complete the signup. Please try again later.')
+        }
+        await updateProfile(firebaseAuth.currentUser, { displayName: displayName })
+        error.value = null
+        isPending.value = false
+            /* console.log(res.user) */
+        return res
+    } catch (err) {
+        console.log(err)
+        const errorCode = err.code
+        if (errorCode == 'auth/weak-password') {
+            error.value = 'The password you entered is too weak.'
+        } else if (errorCode == 'auth/email-already-in-use') {
+            error.value = 'The email address is already in use.';
+        } else {
+            error.value = err.message
+        }
+        isPending.value = false
+    }
+
+}
+
+const useSignup = () => {
+    return { error, isPending, signup }
+}
+
+export default useSignup
+
+
+
 
 
 
