@@ -29,6 +29,29 @@ git commit -m "message"
 git push origin main 
 
 
+// HOW TO USE FIREBASE STORAGE //
+import { getStorage, ref } from "firebase/storage";
+const firestoreStorage = getStorage();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

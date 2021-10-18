@@ -146,7 +146,7 @@ click storage in the sidebar
 
 // HOW TO INITIALIZE PROJECT FOR FIREBASE //  
 type firebase init in the terminal
-then select the features we want to for our project
+then select the features we want for our project
 select existing projects with the one we created at firebase
 What file should be used for Firestore Rules? (firestore.rules) press enter for default
 What file should be used for Firestore indexes? (firestore.indexes.json) press enter for default

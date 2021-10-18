@@ -829,8 +829,9 @@ const useSignup = () => {
 export default useSignup
 
 
-
-
+// HOW TO ADD TAILWIND TO VUE //
+vue add tailwind // type in command
+npx tailwindcss -o tailwind.css --watch // to watch every changes
 
 
 
