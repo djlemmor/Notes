@@ -19,7 +19,8 @@ min-height: 150px;
 font-family: inherit;
 # buttons and inputs don't inherit from their parents
 
-
+@media only screen and (min-width: 1080px) {}
+# for responsive
 
 // CSS RESET // 
 *,
@@ -28,11 +29,32 @@ font-family: inherit;
 	box-sizing: border-box;
 }
 
-html {
-	font-family: "Poppins";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+:root {
+  --primary-color: #007AF3;
 }
 
+body {
+  background: #f0f2f5;
+  margin: 0;
+  font-family: 'Poppins';
+}
 
+a {
+  color: #444444;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+   width: 1080px;
+   margin: 0 auto;
+ }
 
 // NOTES // 
 anything related to typography is inherited
@@ -44,6 +66,21 @@ the css cascade algorithm uses, 1. origin and importance, 2. specificity, 3. ord
 
 
 
+const mobileBtn = document.getElementById('mobile-cta')
+              nav = document.querySelector('nav')
+              mobileBtnExit = document.getElementById('mobile-exit');
 
+        mobileBtn.addEventListener('click', () => {
+            nav.classList.add('menu-btn');
+        })
+
+        mobileBtnExit.addEventListener('click', () => {
+            nav.classList.remove('menu-btn');
+        })
+
+
+nav.menu-btn {
+  display: block;
+}
 
 
