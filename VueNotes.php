@@ -849,7 +849,7 @@ to
 vue.config.js
 
 // VUE SCRIPT SETUP //
-<script lang="ts" setup>
+<script setup lang="ts" >
 import HelloWorld from '/components/HelloWorld.vue';
 let name = "DJ";
 </script>
