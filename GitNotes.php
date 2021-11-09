@@ -1,5 +1,12 @@
 <? php
 
+// GLOSSARY //
+#local - the computer you are working on 
+# repository - the location where the data is stored and managed
+# origin - the main or master branch in the github repository
+# checkout - to change branches or in command line cd to change directory
+
+
 // HOW TO ADD A PROJECT TO GITHUB //
 1. Create a new repository on GitHub
 2. Open Git Bash.
@@ -34,8 +41,20 @@ import { getStorage, ref } from "firebase/storage";
 const firestoreStorage = getStorage();
 
 
+# how to push the local repository to github repository
+git add .
+git commit -m "updates" # -m for message or label of the update
+git push origin dev-branch # basically means to push to the origin the dev-branch updates
 
+# how to update the local repository 
+git checkout master # to go to the master branch
+git pull # pull from the github repository to the local repository
+git checkout dj-dev # go to the dj-dev branch
+git merge master # merge the master branch and dj-dev local branch
 
+# what if you cant merge or cant pull
+git reset --hard # to reset the local update so you can merge with the github repository
+esc then :q! # press the escape key on the keyboard and type :q! if prompted
 
 
 

@@ -1,8 +1,6 @@
 <?php 
 
-// VUE 3 NOTES //
-
-// HOW TO START? //
+// HOW TO START //
 first install nodejs so we can use node package manager or npm to install vue cli
 type node -v on cmd or any command line to check if we installed nodejs properly
 #command to instal vue cli #npm is the nodejs we install #-g means install the package globally
@@ -834,26 +832,55 @@ vue add tailwind // type in command
 npx tailwindcss -o tailwind.css --watch // to watch every changes
 
 
+// VUE CLI HOT REALOAD PROBLEM //
+Solution
+in package.json change
+"serve": "vue-cli-service serve",
+to
+"serve": "vue-cli-service serve --host localhost",
+or
+add
+module.exports = {
+  devServer: {
+    host: 'localhost'
+  }
+}
+to
+vue.config.js
+
+// VUE SCRIPT SETUP //
+<script lang="ts" setup>
+import HelloWorld from '/components/HelloWorld.vue';
+let name = "DJ";
+</script>
 
 
 
+// TYPESCRIPT //
+https://hackernoon.com/migrating-from-javascript-to-typescript-some-tips
+npm install --save-dev @types/react
+function computeGlobalGrade(studentName: string | undefined | null) {
+    const nameOne: string = studentName;
+    // Typescript will complain that the student name might be null and cannot be assigned to a string
 
+    const nameTwo: string = studentName!;
+    // compiles fine because you tell compiler that null | undefined are excluded 
+}
+interface ClaimCertStepsProps {
+  i18nCertText: string;
+  isProjectsCompleted: boolean;
+  steps: string;
+  superBlock: string;
+}
+interface SudentProperties {
+    name?: string,
+    age?: number
+}
 
+let student: SudentProperties = {};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+student.name = "ismail";
+student.age = 15;
 
 
 
@@ -906,4 +933,3 @@ reactive = to track the change of a value/state of a variable/data in the compos
 
 
 
-*/
