@@ -265,6 +265,22 @@ public function boot() { JsonResource::withoutWrapping(); }
 # run in the command line 
 
 
+// LARAVEL .ENV FILE  //
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+# php artisan key:generate
+# run in the command to generate app key
+
+APP_DEBUG=true
+# set to false in production so the errors won't be displayed in a live site
+APP_URL=http://localhost:8000
+# need to be change for production
+
+
+
+
+
 
 
 
