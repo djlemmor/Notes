@@ -324,7 +324,7 @@ when creating a project using vue cli manually select Router and select yes if p
 
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> | # router link browser
+    <router-link to="/">Home</router-link> # router link browser
     <router-link to="/about">About</router-link> # router link, rendered as an a tag in browser
     <router-link :to="{ name: 'About' }">About</router-link> # data bind the route with it's name 
   </div> 
