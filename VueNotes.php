@@ -3,11 +3,11 @@
 // HOW TO START //
 first install nodejs so we can use node package manager or npm to install vue cli
 type node -v on cmd or any command line to check if we installed nodejs properly
-#command to instal vue cli #npm is the nodejs we install #-g means install the package globally
+# command to instal vue cli #npm is the nodejs we install #-g means install the package globally
 npm install -g @vue/cli
-#example cd .. or cd Documents
+# example cd .. or cd Documents
 change folder or directory to where we gonna create our project using cd command in the command line
-#command to create the project #vue is the command from vue cli package we installed 
+# command to create the project #vue is the command from vue cli package we installed 
 vue create project-name
 
 // HOW TO SELECT FEATURES IN VUE //
@@ -22,12 +22,12 @@ In dedicated config files
 
 
 // HOW TO CHANGE DIRECTORY OR FOLDER //
-#to go back one folder 
 cd ..
+# to go back one folder 
 cd project-name 
-#open your favorite text editor
+# open your favorite text editor
 code . 
-#serve or run the application to the browser 
+# serve or run the application to the browser 
 npm run serve 
 
 // VUE FILE AND DIRECTORY STRUCTURE //
@@ -876,11 +876,27 @@ interface SudentProperties {
     name?: string,
     age?: number
 }
-
 let student: SudentProperties = {};
-
 student.name = "ismail";
 student.age = 15;
+
+// TYPESCRIPT FOR PROPS //
+props: {
+    // type check
+    height: Number,
+    // type check plus other validations
+    age: {
+      type: Number,
+      default: 0,
+      required: true,
+      validator: value => {
+        return value >= 0
+      }
+    }
+
+
+
+    
 
 
 
