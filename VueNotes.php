@@ -895,8 +895,27 @@ props: {
     }
 
 
+// VUEX //
+import { createStore } from 'vuex'
 
-    
+export default createStore({
+  state: {
+    isSigningIn: false
+  },
+  # state is where we define the variables
+  mutations: {
+    toggleAuthModal: (state) => {
+    state.isSigningIn = true;
+    }
+  },
+  # mutations is like computed, functions that change the state or value of a variables
+  # automatically get the state data in the parameters
+  actions: {
+  },
+  modules: {
+  }
+})
+
 
 
 
