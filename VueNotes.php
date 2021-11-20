@@ -916,8 +916,17 @@ export default createStore({
   }
 })
 
-
-
+// VUEX TERMS // 
+state = app-level state/data
+# this is like the data method where we declare our variables
+getters = get pieces of state or computed values from state
+actions = called from components to commit a mutation
+# actions is asynchronous
+# this is like the computed in the option api
+mutations = mutate a state 
+# mutations is synchronous
+# this is like the method in the option api
+modules =  each module can have its own state, getters, actions and mutations 
 
 
 
